@@ -57,5 +57,7 @@
         </ul>
         <p>Happy coding! 💻🚀</p>
     </div>
+    <img src="image.png" alt="Description of image">
 </body>
 </html>
+
