@@ -1,63 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiniTalk README</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        code {
-            background: #eee;
-            padding: 3px;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>MiniTalk 🗨️</h1>
-        <p>A simple communication program between a server and a client using UNIX signals (SIGUSR1 & SIGUSR2). 🚀</p>
-        <h2>How It Works ⚙️</h2>
-        <ul>
-            <li>The <strong>server</strong> waits for messages and prints received characters.</li>
-            <li>The <strong>client</strong> sends a message, bit by bit, using signals.</li>
-        </ul>
-        <h2>Installation & Usage 📜</h2>
-        <ol>
-            <li><strong>Compile the programs:</strong></li>
-            <pre><code>make</code></pre>
-            <li><strong>Run the server:</strong></li>
-            <pre><code>./server</code></pre>
-            <p>This will print the server's PID (Process ID).</p>
-            <li><strong>Send a message with the client:</strong></li>
-            <pre><code>./client &lt;server_pid&gt; "Hello, world!"</code></pre>
-        </ol>
-        <h2>Features ✨</h2>
-        <ul>
-            <li>Sends messages from client to server using signals.</li>
-            <li>Handles signals safely.</li>
-            <li>Notifies when the message is fully received.</li>
-        </ul>
-        <h2>Notes 📝</h2>
-        <ul>
-            <li>Ensure to use the correct server PID.</li>
-            <li>Works only on UNIX-based systems.</li>
-        </ul>
-        <p>Happy coding! 💻🚀</p>
-    </div>
-    <img src="image.png" alt="Description of image">
-</body>
-</html>
+# 📡 minitalk
 
+> A minimalist client-server messaging app built in C — using only UNIX signals.  
+> **No `libft`, just raw signal power.**
+
+---
+
+## 🚀 Overview
+
+`minitalk` is a small communication project where a **client** sends a string message to a **server**, one bit at a time, using `SIGUSR1` and `SIGUSR2`. The server then reconstructs and prints the message.
+
+It’s a deep dive into:
+
+- UNIX signals  
+- Bitwise operations  
+- Inter-process communication  
+- Handling async behavior in C  
+- Writing clean, self-contained C code (yep — **no libft!**)
+
+---
+
+## 📁 Project Structure
+
+```
+minitalk/
+├── client.c             # Sends messages to the server
+├── server.c             # Receives and reconstructs messages
+├── utils.c              # Helper functions (libft-style, written from scratch)
+├── utils.h
+├── Makefile
+└── README.md
+```
+
+---
+
+## 🧰 No libft used!
+
+All helper functions (`ft_atoi`, `ft_strlen`, `ft_putstr_fd`, etc.) were implemented manually in `utils.c`.  
+The entire project is **fully self-contained** and dependency-free.
+
+---
+
+## 🧪 How to Use
+
+1. **Build the project**
+
+```bash
+make
+```
+
+2. **Start the server**
+
+```bash
+./server
+```
+
+This will print the server’s **PID**. You’ll need it for the client.
+
+3. **Send a message with the client**
+
+```bash
+./client <server_pid> "Hello from the client!"
+```
+
+The server will receive and print your message.
+
+---
+
+## 🧠 How it Works
+
+- The **client** encodes each character bit-by-bit.
+  - Sends `SIGUSR1` for bit `0`
+  - Sends `SIGUSR2` for bit `1`
+- The **server** receives the signals, rebuilds the bits into characters, and prints the message.
+- It’s kind of like Morse code, but nerdier.
+
+---
+
+## 📌 Notes
+
+- Error handling is included for invalid PIDs and failed signals.
+- Signals are sent synchronously with `usleep` delays to avoid overflow.
+- The server can handle multiple messages but one client at a time (basic implementation).
+
+---
+
+## 🤘 Author
+
+Crafted from scratch, bit by bit, by [Your Name].  
+No `libft`. Just raw C and signals.
+
+---
+
+![alt text](image-1.png)
